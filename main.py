@@ -1,6 +1,7 @@
 from pick import pick 
 from kubernetes import client, config 
 from kubernetes.client import configuration
+from math import ceil
 
 def main():
     # Carrega contextos do arquivo kube-config
@@ -92,32 +93,32 @@ def parse_cpu(cpu_str):
 # Função para converter valores de memória em Mebibytes (Mi)
 def parse_memory(memory_str):
     if memory_str.endswith('Ei'):
-        return int(float(memory_str[:-2]) * 1024**6)
+        return ceil(float(memory_str[:-2]) * 1024**6)
     elif memory_str.endswith('Pi'):
-        return int(float(memory_str[:-2]) * 1024**5)
+        return ceil(float(memory_str[:-2]) * 1024**5)
     elif memory_str.endswith('Ti'):
-        return int(float(memory_str[:-2]) * 1024**4)
+        return ceil(float(memory_str[:-2]) * 1024**4)
     elif memory_str.endswith('Gi'):
-        return int(float(memory_str[:-2]) * 1024**3)
+        return ceil(float(memory_str[:-2]) * 1024**3)
     elif memory_str.endswith('Mi'):
-        return int(float(memory_str[:-2]) * 1024**2)
+        return ceil(float(memory_str[:-2]) * 1024**2)
     elif memory_str.endswith('Ki'):
-        return int(float(memory_str[:-2]) * 1024)
+        return ceil(float(memory_str[:-2]) * 1024)
     elif memory_str.endswith('E'):
-        return int(float(memory_str[:-1]) * 10**18 / 1024**2)
+        return ceil(float(memory_str[:-1]) * 1000**6)
     elif memory_str.endswith('P'):
-        return int(float(memory_str[:-1]) * 10**15 / 1024**2)
+        return ceil(float(memory_str[:-1]) * 1000**5)
     elif memory_str.endswith('T'):
-        return int(float(memory_str[:-1]) * 10**12 / 1024**2)
+        return ceil(float(memory_str[:-1]) * 1000**4)
     elif memory_str.endswith('G'):
-        return int(float(memory_str[:-1]) * 10**9 / 1024**2)
+        return ceil(float(memory_str[:-1]) * 1000**3)
     elif memory_str.endswith('M'):
-        return int(float(memory_str[:-1]) * 10**6 / 1024**2)
+        return ceil(float(memory_str[:-1]) * 1000**2)
     elif memory_str.endswith('k'):
-        return int(float(memory_str[:-1]) * 10**3 / 1024**2)
+        return ceil(float(memory_str[:-1]) * 1000)
     elif memory_str.endswith('m'):
-        return int(float(memory_str[:-1]) / 1024**2)
-    return int(memory_str)  # If the values are in bytes, convert to MiB
+        return ceil(float(memory_str[:-1]) / 1000)
+    return int(memory_str)
 
 if __name__ == '__main__':
     main() 
